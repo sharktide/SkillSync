@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSync – Learn Together, Grow Together</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0A1628;
+      --surface:    #F0F7FF;
+      --card:       #FFFFFF;
+      --blue:       #1A6FE8;
+      --blue-dk:    #1458C0;
+      --blue-lt:    #DDEEFF;
+      --blue-mid:   #3B8EF5;
+      --sky:        #E8F4FF;
+      --teal:       #0EA5C8;
+      --teal-lt:    #D6F3FA;
+      --accent:     #0FC9A0;
+      --accent-lt:  #D0F7EE;
+      --muted:      #5A7090;
+      --border:     #D0E4F7;
+      --radius:     16px;
+      --radius-sm:  10px;
+      --shadow:     0 2px 16px rgba(26,111,232,.10);
+      --shadow-md:  0 8px 32px rgba(26,111,232,.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 6vw;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      text-decoration: none;
+      display: flex; align-items: center;
+    }
+    .logo img { height: 44px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: .875rem; font-weight: 500;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta {
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 999px;
+      padding: 10px 22px; font-size: .875rem; font-weight: 600;
+      cursor: pointer; transition: background .2s, transform .15s;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: var(--blue-dk); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 96px 6vw 80px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 60px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-lt); color: var(--blue);
+      border-radius: 999px; padding: 6px 14px;
+      font-size: .78rem; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-tag::before {
+      content: ''; width: 7px; height: 7px;
+      border-radius: 50%; background: var(--blue);
+    }
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -.02em;
+    }
+    h1 em { font-style: normal; color: var(--blue); }
+    .hero-sub {
+      margin-top: 20px; font-size: 1.05rem;
+      color: var(--muted); max-width: 480px; line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 999px;
+      padding: 14px 32px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: transform .15s, box-shadow .15s, background .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--blue-dk); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn-ghost {
+      background: transparent; color: var(--ink);
+      border: 2px solid var(--border); border-radius: 999px;
+      padding: 12px 28px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: border-color .2s, color .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* hero visual */
+    .hero-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .hcard {
+      background: var(--card); border-radius: var(--radius);
+      padding: 22px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 10px;
+      border: 1px solid var(--border);
+    }
+    .hcard:first-child { grid-column: 1/-1; }
+    .hcard-label {
+      font-size: .72rem; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); font-weight: 600;
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      border-radius: 999px; padding: 4px 12px;
+      font-size: .78rem; font-weight: 500;
+    }
+    .pill-b { background: var(--blue-lt); color: var(--blue); }
+    .pill-t { background: var(--teal-lt); color: var(--teal); }
+    .pill-a { background: var(--accent-lt); color: #0A8A6C; }
+    .match-row { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .av-b { background: var(--blue); }
+    .av-t { background: var(--teal); }
+    .av-a { background: var(--accent); }
+    .match-info { flex: 1; }
+    .match-name { font-weight: 600; font-size: .875rem; }
+    .match-meta { font-size: .75rem; color: var(--muted); }
+    .credit-chip {
+      background: var(--accent-lt); color: #0A8A6C;
+      border-radius: 999px; padding: 3px 10px;
+      font-size: .75rem; font-weight: 700;
+    }
+
+    /* ── SECTION SHELL ── */
+    section { padding: 88px 6vw; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .eyebrow {
+      font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--blue); margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    .section-sub {
+      margin-top: 14px; font-size: 1rem;
+      color: var(--muted); max-width: 560px; line-height: 1.7;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .steps {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+    }
+    .step {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 30px 24px; position: relative; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .step-icon {
+      width: 52px; height: 52px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 18px;
+    }
+    .si-b { background: var(--blue-lt); }
+    .si-t { background: var(--teal-lt); }
+    .si-a { background: var(--accent-lt); }
+    .step h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+    .step-num {
+      position: absolute; top: 20px; right: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.8rem;
+      font-weight: 800; color: var(--border);
+      line-height: 1; user-select: none;
+    }
+
+    /* ── CREDITS ── */
+    .credits-grid {
+      margin-top: 56px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    }
+    .credit-card {
+      background: var(--card); border-radius: var(--radius);
+      padding: 36px; box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .credit-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .credit-card p { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+    .credit-big {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 3rem; font-weight: 800;
+      color: var(--blue); line-height: 1; margin: 18px 0 6px;
+    }
+    .credit-note { font-size: .8rem; color: var(--muted); }
+    .credit-list { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .credit-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: .875rem;
+    }
+    .ci-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    /* ── PRICING ── */
+    #pricing { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pricing-grid {
+      margin-top: 56px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+      max-width: 760px;
+    }
+    .price-card {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 38px 34px; border: 2px solid var(--border);
+      position: relative; transition: border-color .2s;
+    }
+    .price-card.featured {
+      background: var(--blue); color: #fff;
+      border-color: var(--blue);
+    }
+    .price-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: var(--ink);
+      border-radius: 999px; padding: 4px 14px;
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; white-space: nowrap;
+    }
+    .price-tier {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: .95rem;
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px;
+    }
+    .price-card.featured .price-tier { color: rgba(255,255,255,.7); }
+    .price-amount {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.8rem; font-weight: 800;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .price-period { font-size: .85rem; color: var(--muted); margin-bottom: 28px; }
+    .price-card.featured .price-period { color: rgba(255,255,255,.65); }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .price-features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .875rem; line-height: 1.5;
+    }
+    .price-card.featured .price-features li { color: rgba(255,255,255,.9); }
+    .check {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; flex-shrink: 0; margin-top: 1px;
+    }
+    .price-card:not(.featured) .check { background: var(--accent-lt); color: #0A8A6C; }
+    .price-card.featured .check { background: rgba(255,255,255,.2); color: #fff; }
+    .price-btn {
+      display: block; width: 100%; text-align: center;
+      margin-top: 30px; padding: 13px;
+      border-radius: 999px; font-size: .95rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; border: none;
+      transition: opacity .2s, transform .15s;
+    }
+    .price-btn:hover { opacity: .85; transform: translateY(-1px); }
+    .price-card:not(.featured) .price-btn { background: var(--blue); color: #fff; }
+    .price-card.featured .price-btn { background: #fff; color: var(--blue); }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .testi {
+      background: var(--card); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .testi-stars { color: #F5A623; font-size: .9rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-body { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .testi-person { display: flex; align-items: center; gap: 12px; }
+    .testi-name { font-weight: 600; font-size: .875rem; }
+    .testi-role { font-size: .75rem; color: var(--muted); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+      border-radius: 24px;
+      padding: 64px 48px; text-align: center; color: #fff;
+      max-width: 860px; margin: 0 auto;
+      position: relative; overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: rgba(255,255,255,.07);
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
+    .cta-banner h2 { color: #fff; position: relative; z-index: 1; }
+    .cta-banner p { color: rgba(255,255,255,.8); margin-top: 12px; font-size: 1rem; position: relative; z-index: 1; }
+    .cta-banner .btn-white {
+      background: #fff; color: var(--blue);
+      border: none; border-radius: 999px;
+      padding: 14px 36px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; margin-top: 32px; display: inline-block;
+      text-decoration: none; position: relative; z-index: 1;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .cta-banner .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,.5);
+      padding: 48px 6vw 32px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.2rem; color: #fff; }
+    .footer-logo span { color: var(--blue-mid); }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-size: .8rem; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); text-align: center; }
+
+    /* ── COMMUNITY SERVICE ── */
+    .cs-grid {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .cs-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius); padding: 28px 24px;
+    }
+    .cs-icon { font-size: 1.8rem; margin-bottom: 16px; }
+    .cs-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .cs-card p { font-size: .875rem; color: rgba(255,255,255,.55); line-height: 1.65; }
+    .cs-banner {
+      margin-top: 48px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius); padding: 36px 48px;
+      display: flex; align-items: center; justify-content: space-around;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .cs-stat { text-align: center; }
+    .cs-banner-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .cs-banner-label { font-size: .8rem; color: rgba(255,255,255,.5); margin-top: 6px; max-width: 140px; margin-left: auto; margin-right: auto; }
+    .cs-divider { width: 1px; height: 60px; background: rgba(255,255,255,.12); }
+
+    /* ══════════════════════════════════════════
+       MODAL SYSTEM
+    ══════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(10,22,40,.55);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--card);
+      border-radius: 24px;
+      width: 100%; max-width: 560px;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(26,111,232,.2);
+      transform: translateY(20px) scale(.98);
+      transition: transform .25s;
+    }
+    .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+
+    .modal-header {
+      padding: 32px 36px 0;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .modal-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem; font-weight: 800; color: var(--ink);
+    }
+    .modal-subtitle { font-size: .9rem; color: var(--muted); margin-top: 4px; }
+    .modal-close {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--surface); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--muted); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .modal-close:hover { background: var(--blue-lt); color: var(--blue); }
+
+    .modal-body { padding: 28px 36px 36px; }
+
+    /* Progress bar */
+    .progress-bar {
+      display: flex; gap: 6px; margin-bottom: 32px;
+    }
+    .progress-step {
+      flex: 1; height: 4px; border-radius: 999px;
+      background: var(--border); transition: background .3s;
+    }
+    .progress-step.done { background: var(--blue); }
+    .progress-step.active { background: var(--blue-mid); }
+
+    /* Form elements */
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block; font-size: .85rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 7px;
+    }
+    .form-label span { color: var(--muted); font-weight: 400; font-size: .8rem; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 11px 15px;
+      border: 2px solid var(--border); border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: .9rem;
+      color: var(--ink); background: var(--card);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,111,232,.12);
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* Skill tag input */
+    .tag-input-wrap {
+      border: 2px solid var(--border); border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      min-height: 48px;
+      display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+      cursor: text; transition: border-color .2s, box-shadow .2s;
+      background: var(--card);
+    }
+    .tag-input-wrap:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,111,232,.12);
+    }
+    .tag-input-wrap input {
+      border: none; outline: none; flex: 1; min-width: 120px;
+      font-family: 'Inter', sans-serif; font-size: .9rem;
+      color: var(--ink); background: transparent; padding: 3px 4px;
+    }
+    .tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--blue-lt); color: var(--blue);
+      border-radius: 999px; padding: 3px 10px 3px 12px;
+      font-size: .8rem; font-weight: 500;
+    }
+    .tag button {
+      background: none; border: none; cursor: pointer;
+      color: var(--blue); font-size: .85rem; line-height: 1;
+      padding: 0; display: flex; align-items: center;
+      opacity: .7; transition: opacity .15s;
+    }
+    .tag button:hover { opacity: 1; }
+    .tag-hint { font-size: .78rem; color: var(--muted); margin-top: 5px; }
+
+    /* Interest chips */
+    .interest-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .interest-chip {
+      padding: 6px 14px; border-radius: 999px;
+      border: 2px solid var(--border); background: var(--card);
+      font-size: .82rem; font-weight: 500; cursor: pointer;
+      color: var(--muted); transition: all .2s;
+      user-select: none;
+    }
+    .interest-chip.selected {
+      background: var(--blue-lt); border-color: var(--blue);
+      color: var(--blue);
+    }
+    .interest-chip:hover:not(.selected) { border-color: var(--blue-mid); color: var(--blue-mid); }
+
+    /* Availability checkboxes */
+    .avail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+    .avail-chip {
+      padding: 8px 12px; border-radius: var(--radius-sm);
+      border: 2px solid var(--border); background: var(--card);
+      font-size: .82rem; font-weight: 500; cursor: pointer;
+      color: var(--muted); transition: all .2s; text-align: center;
+      user-select: none;
+    }
+    .avail-chip.selected { background: var(--accent-lt); border-color: var(--accent); color: #0A8A6C; }
+
+    /* Step navigation */
+    .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+    .btn-back {
+      background: none; border: 2px solid var(--border); border-radius: 999px;
+      padding: 11px 24px; font-size: .9rem; font-weight: 600;
+      cursor: pointer; color: var(--muted); transition: all .2s;
+    }
+    .btn-back:hover { border-color: var(--blue); color: var(--blue); }
+    .btn-next {
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 999px;
+      padding: 12px 28px; font-size: .9rem; font-weight: 600;
+      cursor: pointer; transition: background .2s, transform .15s, box-shadow .15s;
+    }
+    .btn-next:hover { background: var(--blue-dk); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .step-counter { font-size: .82rem; color: var(--muted); }
+
+    /* Divider */
+    .form-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    /* ── MATCHES PAGE ── */
+    #matches-view {
+      display: none; min-height: 100vh;
+      background: var(--surface);
+    }
+    #matches-view.active { display: block; }
+
+    .matches-header {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 0 6vw; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .matches-hero {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+      padding: 56px 6vw;
+      color: #fff; text-align: center;
+    }
+    .matches-hero h2 { color: #fff; font-size: clamp(1.8rem,4vw,2.8rem); }
+    .matches-hero p { color: rgba(255,255,255,.8); margin-top: 10px; font-size: 1rem; }
+
+    .matches-body { padding: 48px 6vw; max-width: 1100px; margin: 0 auto; }
+
+    .match-filters {
+      display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap;
+    }
+    .filter-chip {
+      padding: 7px 16px; border-radius: 999px;
+      border: 2px solid var(--border); background: var(--card);
+      font-size: .82rem; font-weight: 500; cursor: pointer;
+      color: var(--muted); transition: all .2s;
+    }
+    .filter-chip.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .filter-chip:hover:not(.active) { border-color: var(--blue); color: var(--blue); }
+
+    .matches-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .match-card {
+      background: var(--card); border-radius: var(--radius);
+      padding: 24px; border: 1px solid var(--border);
+      box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .match-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+    .match-card-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .match-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .match-card-info { flex: 1; }
+    .match-card-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700; }
+    .match-card-meta { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+    .match-score {
+      background: var(--blue-lt); color: var(--blue);
+      border-radius: var(--radius-sm); padding: 6px 12px;
+      font-size: .78rem; font-weight: 700; text-align: center;
+    }
+    .match-score-num { font-size: 1.1rem; display: block; }
+
+    .match-card-section { margin-bottom: 12px; }
+    .match-section-label {
+      font-size: .72rem; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--muted); font-weight: 600; margin-bottom: 6px;
+    }
+    .match-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+    .match-pill {
+      border-radius: 999px; padding: 3px 10px;
+      font-size: .75rem; font-weight: 500;
+    }
+    .mp-teach { background: var(--blue-lt); color: var(--blue); }
+    .mp-learn { background: var(--accent-lt); color: #0A8A6C; }
+    .mp-int   { background: var(--teal-lt); color: var(--teal); }
+
+    .match-card-footer {
+      display: flex; gap: 8px; margin-top: 18px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-connect {
+      flex: 1; background: var(--blue); color: #fff;
+      border: none; border-radius: 999px; padding: 9px;
+      font-size: .85rem; font-weight: 600; cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-connect:hover { background: var(--blue-dk); }
+    .btn-save {
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: 999px; padding: 9px 14px;
+      font-size: .85rem; cursor: pointer; color: var(--muted);
+      transition: all .2s;
+    }
+    .btn-save:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* User profile strip on matches page */
+    .profile-strip {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .profile-strip-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 800; flex-shrink: 0;
+    }
+    .profile-strip-info { flex: 1; min-width: 160px; }
+    .profile-strip-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 1.05rem; }
+    .profile-strip-sub { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .profile-strip-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 32px; right: 32px; z-index: 2000;
+      background: var(--ink); color: #fff;
+      border-radius: var(--radius-sm); padding: 14px 20px;
+      font-size: .875rem; font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      transform: translateY(20px); opacity: 0;
+      transition: transform .3s, opacity .3s;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* Loading spinner */
+    .spinner-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 48px;
+      gap: 16px;
+    }
+    .spinner {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-label { font-size: .9rem; color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .credits-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .cs-grid { grid-template-columns: 1fr 1fr; }
+      .cs-divider { display: none; }
+      .modal-body, .modal-header { padding-left: 24px; padding-right: 24px; }
+    }
+    @media (max-width: 600px) {
+      .steps { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .cta-banner { padding: 48px 28px; }
+      .cs-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .avail-grid { grid-template-columns: 1fr 1fr; }
+      .matches-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ LANDING PAGE ═══════════════ -->
+<div id="landing-view">
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#" onclick="showLanding()"><img src="data:image/png;base64,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" alt="SkillSync" style="height:44px;width:auto;display:block;"/></a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#credits">Credits</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a class="nav-cta" href="#" onclick="openSignup(); return false;">Get started free</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag">Student-powered learning</div>
+    <h1>Learn from peers.<br><em>Earn by teaching.</em></h1>
+    <p class="hero-sub">
+      SkillSync matches students who want to learn with students who already know.
+      Teach a skill, earn credits. Spend credits on tutoring. Everyone grows together.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#" onclick="openSignup(); return false;">Create your profile</a>
+      <a class="btn-ghost" href="#how">See how it works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hcard">
+      <div class="hcard-label">Your skills</div>
+      <div class="skill-pills">
+        <span class="pill pill-b">Python</span>
+        <span class="pill pill-t">Graphic Design</span>
+        <span class="pill pill-a">Essay Writing</span>
+        <span class="pill pill-b">Algebra</span>
+        <span class="pill pill-t">Spanish</span>
+      </div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Matches for you</div>
+      <div class="match-row">
+        <div class="avatar av-b">A</div>
+        <div class="match-info">
+          <div class="match-name">Ava M.</div>
+          <div class="match-meta">Teaches Python · Age 16</div>
+        </div>
+        <span class="credit-chip">+1 cr</span>
+      </div>
+      <div class="match-row">
+        <div class="avatar av-t">J</div>
+        <div class="match-info">
+          <div class="match-name">Jordan L.</div>
+          <div class="match-meta">Teaches Design · Age 17</div>
+        </div>
+        <span class="credit-chip">+1 cr</span>
+      </div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Your credits</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:2rem;font-weight:800;color:var(--blue)">5</div>
+      <div style="font-size:.8rem;color:var(--muted)">Redeem for tutoring sessions</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="eyebrow">How SkillSync works</div>
+    <h2>Four simple steps.</h2>
+    <p class="section-sub">From signing up to your first session, the whole process takes less than five minutes.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-icon si-b">📝</div>
+        <h3>Build your profile</h3>
+        <p>Sign up and list the skills you already have and the ones you want to learn. Takes two minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-icon si-t">🤝</div>
+        <h3>Get matched</h3>
+        <p>We pair you with students close to your age who have the skills you want — or who want to learn yours.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-icon si-a">💰</div>
+        <h3>Redeem or pay</h3>
+        <p>Use your earned credits to book a session for free, or pay $4.99 if you're running low.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-icon si-b">🎓</div>
+        <h3>Teach &amp; earn</h3>
+        <p>Run a tutoring session for another student and earn a credit. The more you teach, the more you unlock.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section id="credits">
+  <div class="section-inner">
+    <div class="eyebrow">How credits work</div>
+    <h2>Teach more. Learn more.</h2>
+    <p class="section-sub">Credits are the currency that makes SkillSync go. Every session you lead earns you one — and every session you book costs one.</p>
+    <div class="credits-grid">
+      <div class="credit-card">
+        <h3>Earn credits by teaching</h3>
+        <p>Every time you run a session for another student, you earn one credit automatically at the end of the call.</p>
+        <div class="credit-big">+1</div>
+        <div class="credit-note">credit per session taught</div>
+        <div class="credit-list">
+          <div class="credit-item">
+            <div class="ci-icon si-a">✅</div>
+            <span>Complete a session to earn — no minimum rating required</span>
+          </div>
+          <div class="credit-item">
+            <div class="ci-icon si-a">✅</div>
+            <span>Credits never expire</span>
+          </div>
+          <div class="credit-item">
+            <div class="ci-icon si-a">✅</div>
+            <span>Stack up as many as you like</span>
+          </div>
+        </div>
+      </div>
+      <div class="credit-card">
+        <h3>Spend credits on tutoring</h3>
+        <p>Booking a session costs one credit. If you've run low, you can buy credits or pay per session instead.</p>
+        <div class="credit-big" style="color:var(--accent)">1</div>
+        <div class="credit-note">credit = 1 session booked</div>
+        <div class="credit-list">
+          <div class="credit-item">
+            <div class="ci-icon si-t">💳</div>
+            <span><strong>Free plan:</strong> buy credits at $4.99 each</span>
+          </div>
+          <div class="credit-item">
+            <div class="ci-icon si-b">⚡</div>
+            <span><strong>Plus plan:</strong> buy credits at $2.99 each — a 40% discount</span>
+          </div>
+          <div class="credit-item">
+            <div class="ci-icon si-t">💳</div>
+            <span>No credits? Book a one-off session for $4.99</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="eyebrow">Pricing</div>
+    <h2>Start free. Upgrade when you're ready.</h2>
+    <p class="section-sub">Both plans give you full access to matching and the credit system. Plus just unlocks better value.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Free</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">forever</div>
+        <ul class="price-features">
+          <li><span class="check">✓</span><span>Up to <strong>3 sessions per month</strong></span></li>
+          <li><span class="check">✓</span><span>Full skill matching</span></li>
+          <li><span class="check">✓</span><span>Earn credits by teaching</span></li>
+          <li><span class="check">✓</span><span>Buy extra credits at <strong>$4.99 each</strong></span></li>
+          <li><span class="check">✓</span><span>Pay-per-session at $4.99 when out of credits</span></li>
+        </ul>
+        <a class="price-btn" href="#" onclick="openSignup(); return false;">Get started free</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most popular</div>
+        <div class="price-tier">Plus</div>
+        <div class="price-amount">$4.99</div>
+        <div class="price-period">per month</div>
+        <ul class="price-features">
+          <li><span class="check">✓</span><span><strong>Unlimited sessions</strong> per month</span></li>
+          <li><span class="check">✓</span><span>Full skill matching</span></li>
+          <li><span class="check">✓</span><span>Earn credits by teaching</span></li>
+          <li><span class="check">✓</span><span>Buy extra credits at <strong>$2.99 each</strong> (40% off)</span></li>
+          <li><span class="check">✓</span><span>Priority matching queue</span></li>
+        </ul>
+        <a class="price-btn" href="#" onclick="openSignup(); return false;">Start Plus free for 7 days</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY SERVICE -->
+<section id="community" style="background: var(--ink); color: #fff;">
+  <div class="section-inner">
+    <div class="eyebrow" style="color: var(--accent);">Community service</div>
+    <h2 style="color: #fff;">Give back. Log hours.<br>Build your résumé.</h2>
+    <p class="section-sub" style="color: rgba(255,255,255,.6);">
+      Every session you teach on SkillSync can count toward your community service hours.
+      Perfect for school requirements, NHS, college applications, or just doing good.
+    </p>
+    <div class="cs-grid">
+      <div class="cs-card">
+        <div class="cs-icon">🕐</div>
+        <h3>Hours tracked automatically</h3>
+        <p>Each completed teaching session logs one hour to your community service record. No paperwork, no chasing signatures.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-icon">📄</div>
+        <h3>Printable verification letter</h3>
+        <p>Download an official SkillSync verification letter at any time listing your total hours, sessions taught, and skills covered.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-icon">🏫</div>
+        <h3>School &amp; NHS friendly</h3>
+        <p>SkillSync's logs are formatted to meet common school community service requirements and National Honor Society documentation standards.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-icon">🌟</div>
+        <h3>Earn credits AND hours</h3>
+        <p>You don't have to choose between giving back and getting ahead. Every session earns you a credit <em>and</em> adds to your community service log.</p>
+      </div>
+    </div>
+    <div class="cs-banner">
+      <div class="cs-stat">
+        <div class="cs-banner-num">40+</div>
+        <div class="cs-banner-label">hours logged by students this month</div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="cs-stat">
+        <div class="cs-banner-num">1 hr</div>
+        <div class="cs-banner-label">credited per session taught</div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="cs-stat">
+        <div class="cs-banner-num">Free</div>
+        <div class="cs-banner-label">to log and download on any plan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-inner">
+    <div class="eyebrow">From students</div>
+    <h2>Real results, real peers.</h2>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-body">"I taught three Python sessions in my first week and already had enough credits to get help with my essay. It honestly feels like cheating — but in a good way."</p>
+        <div class="testi-person">
+          <div class="avatar av-b" style="width:40px;height:40px;">M</div>
+          <div>
+            <div class="testi-name">Marcus T.</div>
+            <div class="testi-role">16 · High school junior</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-body">"Being paired with someone my age made such a difference. No awkward tutors. Just another student who actually got where I was coming from."</p>
+        <div class="testi-person">
+          <div class="avatar av-t" style="width:40px;height:40px;">S</div>
+          <div>
+            <div class="testi-name">Sofia R.</div>
+            <div class="testi-role">15 · Sophomore</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-body">"The Plus plan paid for itself on day one. Discounted credits plus unlimited sessions? I've booked six sessions this month and taught four."</p>
+        <div class="testi-person">
+          <div class="avatar av-a" style="width:40px;height:40px;">D</div>
+          <div>
+            <div class="testi-name">Diego K.</div>
+            <div class="testi-role">17 · Senior</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0;">
+  <div class="section-inner">
+    <div class="cta-banner">
+      <h2>Your first session is on us.</h2>
+      <p>Create a free account, list your skills, and get matched in minutes. No credit card needed.</p>
+      <a class="btn-white" href="#" onclick="openSignup(); return false;">Create free account →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Skill<span>Sync</span></div>
+    <div class="footer-links">
+      <a href="#how">How it works</a>
+      <a href="#credits">Credits</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2025 SkillSync. Built for students, by students.</div>
+</footer>
+
+</div><!-- /landing-view -->
+
+<!-- ═══════════════ MATCHES VIEW ═══════════════ -->
+<div id="matches-view">
+  <div class="matches-header">
+    <a class="logo" href="#" onclick="showLanding(); return false;">Skill<span>Sync</span><span class="logo-dot"></span></a>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span id="header-credits" style="font-size:.85rem;font-weight:600;color:var(--blue);">⚡ 1 credit</span>
+      <button class="nav-cta" onclick="openSignup()">Edit profile</button>
+    </div>
+  </div>
+
+  <div class="matches-hero">
+    <h2 id="matches-greeting">Welcome, Student!</h2>
+    <p id="matches-subline">Here are your personalized peer matches based on your skills and learning goals.</p>
+  </div>
+
+  <div class="matches-body">
+    <div id="profile-strip-container"></div>
+
+    <div class="match-filters">
+      <button class="filter-chip active" onclick="filterMatches('all', this)">All Matches</button>
+      <button class="filter-chip" onclick="filterMatches('teach', this)">Can teach you</button>
+      <button class="filter-chip" onclick="filterMatches('learn', this)">Want to learn from you</button>
+      <button class="filter-chip" onclick="filterMatches('interests', this)">Shared interests</button>
+    </div>
+
+    <div id="matches-container">
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+        <div class="spinner-label">Finding your matches…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SIGN-UP MODAL ═══════════════ -->
+<div class="modal-overlay" id="signup-overlay" onclick="overlayClick(event)">
+  <div class="modal" id="signup-modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title">Create your profile</div>
+        <div class="modal-subtitle" id="modal-subtitle">Step 1 of 4 — Account info</div>
+      </div>
+      <button class="modal-close" onclick="closeSignup()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="progress-bar" id="progress-bar">
+        <div class="progress-step active" id="ps-1"></div>
+        <div class="progress-step" id="ps-2"></div>
+        <div class="progress-step" id="ps-3"></div>
+        <div class="progress-step" id="ps-4"></div>
+      </div>
+
+      <!-- STEP 1: Account Info -->
+      <div id="step-1">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First name</label>
+            <input class="form-input" id="first-name" type="text" placeholder="Alex" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last name</label>
+            <input class="form-input" id="last-name" type="text" placeholder="Johnson" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input class="form-input" id="email" type="email" placeholder="alex@school.edu" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Age</label>
+            <input class="form-input" id="age" type="number" placeholder="16" min="13" max="22" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Grade / Year</label>
+            <select class="form-select" id="grade">
+              <option value="">Select…</option>
+              <option>8th Grade</option>
+              <option>9th Grade (Freshman)</option>
+              <option>10th Grade (Sophomore)</option>
+              <option>11th Grade (Junior)</option>
+              <option>12th Grade (Senior)</option>
+              <option>College Freshman</option>
+              <option>College Sophomore</option>
+              <option>College Junior</option>
+              <option>College Senior</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">School name <span>(optional)</span></label>
+          <input class="form-input" id="school" type="text" placeholder="Lincoln High School" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" id="password" type="password" placeholder="Min. 8 characters" />
+        </div>
+        <div class="step-nav">
+          <span class="step-counter">Step 1 of 4</span>
+          <button class="btn-next" onclick="goToStep(2)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Skills -->
+      <div id="step-2" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">Skills you can teach <span>— press Enter or comma to add</span></label>
+          <div class="tag-input-wrap" id="teach-wrap" onclick="focusTagInput('teach-input')">
+            <input id="teach-input" type="text" placeholder="e.g. Python, Algebra, Guitar…" onkeydown="handleTagKey(event,'teach')" />
+          </div>
+          <div class="tag-hint">Add at least one skill you're confident teaching others.</div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group">
+          <label class="form-label">Skills you want to learn <span>— press Enter or comma to add</span></label>
+          <div class="tag-input-wrap" id="learn-wrap" onclick="focusTagInput('learn-input')">
+            <input id="learn-input" type="text" placeholder="e.g. Spanish, Essay Writing, Chemistry…" onkeydown="handleTagKey(event,'learn')" />
+          </div>
+          <div class="tag-hint">What do you want a peer to help you with?</div>
+        </div>
+        <div class="form-group" style="margin-top:20px;">
+          <label class="form-label">How would you describe your overall academic level?</label>
+          <select class="form-select" id="level">
+            <option value="">Select…</option>
+            <option>Beginner — still finding my footing</option>
+            <option>Intermediate — solid in some areas</option>
+            <option>Advanced — strong across most subjects</option>
+            <option>Mixed — depends on the subject</option>
+          </select>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(1)">← Back</button>
+          <span class="step-counter">Step 2 of 4</span>
+          <button class="btn-next" onclick="goToStep(3)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Interests & Bio -->
+      <div id="step-3" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">Interests &amp; hobbies <span>— select all that apply</span></label>
+          <div class="interest-grid" id="interest-grid">
+            <!-- populated by JS -->
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group">
+          <label class="form-label">Short bio <span>(optional)</span></label>
+          <textarea class="form-textarea" id="bio" placeholder="Tell peers a bit about yourself — your goals, study style, or what you're excited to learn…"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Learning style preference</label>
+          <select class="form-select" id="learn-style">
+            <option value="">Select…</option>
+            <option>Visual — diagrams, videos, visual examples</option>
+            <option>Verbal — talking through concepts</option>
+            <option>Practice-first — learn by doing</option>
+            <option>Structured — step-by-step explanations</option>
+            <option>Flexible — whatever works</option>
+          </select>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(2)">← Back</button>
+          <span class="step-counter">Step 3 of 4</span>
+          <button class="btn-next" onclick="goToStep(4)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Availability -->
+      <div id="step-4" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">When are you usually available? <span>— select all that apply</span></label>
+          <div class="avail-grid" id="avail-grid">
+            <!-- populated by JS -->
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group">
+          <label class="form-label">Preferred session format</label>
+          <select class="form-select" id="session-format">
+            <option value="">Select…</option>
+            <option>Video call (Zoom, Meet, etc.)</option>
+            <option>Voice only</option>
+            <option>Text / chat</option>
+            <option>Any format works</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred session length</label>
+          <select class="form-select" id="session-length">
+            <option value="">Select…</option>
+            <option>30 minutes</option>
+            <option>45 minutes</option>
+            <option>60 minutes</option>
+            <option>90 minutes</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Goals <span>(optional)</span></label>
+          <textarea class="form-textarea" id="goals" placeholder="e.g. Improve my SAT Math score, finally understand calculus, get better at public speaking…" style="min-height:64px;"></textarea>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(3)">← Back</button>
+          <span class="step-counter">Step 4 of 4</span>
+          <button class="btn-next" onclick="submitProfile()" style="background:var(--accent);padding:12px 32px;">Find my matches ✨</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════
+   STATE
+═══════════════════════════════════ */
+const state = {
+  currentStep: 1,
+  teachSkills: [],
+  learnSkills: [],
+  interests: [],
+  availability: [],
+  profile: {}
+};
+
+const INTERESTS = [
+  'Math','Science','Literature','History','Computer Science',
+  'Art & Design','Music','Languages','Writing','Psychology',
+  'Biology','Chemistry','Physics','Economics','Film & Media',
+  'Philosophy','Health & Fitness','Engineering','Business','Gaming'
+];
+
+const AVAILABILITY = [
+  'Mon morning','Mon afternoon','Mon evening',
+  'Tue morning','Tue afternoon','Tue evening',
+  'Wed morning','Wed afternoon','Wed evening',
+  'Thu morning','Thu afternoon','Thu evening',
+  'Fri morning','Fri afternoon','Fri evening',
+  'Sat anytime','Sun anytime','Flexible'
+];
+
+// Sample peer pool for matching
+const PEER_POOL = [
+  { name:'Ava Martinez', age:16, grade:'Junior', initials:'AM', color:'#1A6FE8',
+    teaches:['Python','Data Science','Algebra II'], learns:['Spanish','Essay Writing','Guitar'],
+    interests:['Computer Science','Math','Gaming'], availability:['Mon afternoon','Wed afternoon','Fri afternoon'],
+    bio:'Junior at Lincoln High, big into coding and math competitions. Happy to help with Python basics and algebra.', rating:4.9, sessions:23 },
+  { name:'Jordan Lee', age:17, grade:'Senior', initials:'JL', color:'#0EA5C8',
+    teaches:['Graphic Design','Illustrator','Photography'], learns:['Python','Calculus','Physics'],
+    interests:['Art & Design','Film & Media','Computer Science'], availability:['Tue evening','Thu evening','Sat anytime'],
+    bio:'Visual arts senior who loves teaching design fundamentals. Looking for help with science subjects.', rating:4.8, sessions:18 },
+  { name:'Sofia Ramirez', age:15, grade:'Sophomore', initials:'SR', color:'#0FC9A0',
+    teaches:['Spanish','French','Essay Writing'], learns:['Math','Chemistry','Coding'],
+    interests:['Languages','Literature','Psychology'], availability:['Mon evening','Wed morning','Sun anytime'],
+    bio:'Bilingual sophomore who can tutor Spanish and French fluently. Also really good at writing essays.', rating:5.0, sessions:11 },
+  { name:'Marcus Thompson', age:16, grade:'Junior', initials:'MT', color:'#7C5CBF',
+    teaches:['Chemistry','Biology','AP Biology'], learns:['Guitar','Music Theory','Graphic Design'],
+    interests:['Science','Biology','Chemistry','Music'], availability:['Tue afternoon','Thu afternoon','Sat anytime'],
+    bio:'Science nerd who wants to become a doctor. I can make chemistry feel approachable — I promise.', rating:4.7, sessions:31 },
+  { name:'Priya Patel', age:17, grade:'Senior', initials:'PP', color:'#E8701A',
+    teaches:['Calculus','Statistics','SAT Math'], learns:['History','Literature','Spanish'],
+    interests:['Math','Economics','Business'], availability:['Mon afternoon','Wed afternoon','Fri morning'],
+    bio:'Math tutor who helped 10+ friends pass AP Calc last year. Specializing in SAT prep too.', rating:4.9, sessions:47 },
+  { name:'Ethan Brooks', age:14, grade:'Freshman', initials:'EB', color:'#1A6FE8',
+    teaches:['Guitar','Music Theory','Piano basics'], learns:['Python','Web Design','Algebra'],
+    interests:['Music','Art & Design','Gaming','Computer Science'], availability:['Sat anytime','Sun anytime','Fri evening'],
+    bio:'Self-taught guitarist who picked it up in 6th grade. Love teaching other beginners — it\'s super rewarding!', rating:4.6, sessions:8 },
+  { name:'Aaliyah Johnson', age:16, grade:'Junior', initials:'AJ', color:'#0EA5C8',
+    teaches:['History','AP US History','Essay Writing'], learns:['Chemistry','Computer Science','Math'],
+    interests:['History','Literature','Psychology','Writing'], availability:['Mon morning','Wed evening','Thu morning'],
+    bio:'History obsessed junior who can help you ace any essay. My AP History students all got 4s and 5s.', rating:4.8, sessions:15 },
+  { name:'Ryan Chen', age:18, grade:'Senior', initials:'RC', color:'#0FC9A0',
+    teaches:['Web Development','JavaScript','HTML/CSS'], learns:['Biology','Chemistry','Physics'],
+    interests:['Computer Science','Engineering','Business','Math'], availability:['Tue afternoon','Thu afternoon','Sat anytime','Sun anytime'],
+    bio:'Built my first website at 12, now I help others do the same. I can take you from zero to your first website.', rating:5.0, sessions:29 },
+  { name:'Isabella Wong', age:15, grade:'Sophomore', initials:'IW', color:'#7C5CBF',
+    teaches:['Mandarin','Art','Painting'], learns:['Algebra','Python','Biology'],
+    interests:['Languages','Art & Design','Film & Media'], availability:['Mon evening','Fri evening','Sat anytime'],
+    bio:'Fluent Mandarin speaker and studio art student. Love teaching language through art and culture.', rating:4.7, sessions:12 },
+  { name:'Jamal Washington', age:17, grade:'Senior', initials:'JW', color:'#E8701A',
+    teaches:['Physics','AP Physics','Math'], learns:['History','English Literature','Spanish'],
+    interests:['Physics','Engineering','Science','Math'], availability:['Wed afternoon','Thu afternoon','Sat anytime'],
+    bio:'Physics competition finalist who wants to study engineering. I can make mechanics and electricity click for you.', rating:4.9, sessions:22 },
+];
+
+/* ═══════════════════════════════════
+   MODAL CONTROL
+═══════════════════════════════════ */
+function openSignup() {
+  buildInterestGrid();
+  buildAvailGrid();
+  document.getElementById('signup-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeSignup() {
+  document.getElementById('signup-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function overlayClick(e) {
+  if (e.target === document.getElementById('signup-overlay')) closeSignup();
+}
+
+/* ═══════════════════════════════════
+   STEP NAVIGATION
+═══════════════════════════════════ */
+function goToStep(n) {
+  if (n > state.currentStep && !validateStep(state.currentStep)) return;
+
+  document.getElementById('step-' + state.currentStep).style.display = 'none';
+  document.getElementById('step-' + n).style.display = 'block';
+
+  // progress bar
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('ps-' + i);
+    el.className = 'progress-step' + (i < n ? ' done' : i === n ? ' active' : '');
+  }
+
+  const titles = ['', 'Account info', 'Your skills', 'Interests & bio', 'Availability'];
+  document.getElementById('modal-title').textContent = i === 4 ? 'Almost done!' : 'Create your profile';
+  document.getElementById('modal-subtitle').textContent = 'Step ' + n + ' of 4 — ' + titles[n];
+
+  state.currentStep = n;
+  document.getElementById('signup-modal').scrollTop = 0;
+}
+
+function validateStep(n) {
+  if (n === 1) {
+    const fn = document.getElementById('first-name').value.trim();
+    const ln = document.getElementById('last-name').value.trim();
+    const em = document.getElementById('email').value.trim();
+    const ag = document.getElementById('age').value;
+    const pw = document.getElementById('password').value;
+    if (!fn || !ln) { showToast('Please enter your full name.'); return false; }
+    if (!em || !em.includes('@')) { showToast('Please enter a valid email.'); return false; }
+    if (!ag) { showToast('Please enter your age.'); return false; }
+    if (!pw || pw.length < 8) { showToast('Password must be at least 8 characters.'); return false; }
+  }
+  if (n === 2) {
+    if (state.teachSkills.length === 0) { showToast('Add at least one skill you can teach.'); return false; }
+    if (state.learnSkills.length === 0) { showToast('Add at least one skill you want to learn.'); return false; }
+  }
+  return true;
+}
+
+/* ═══════════════════════════════════
+   TAG INPUT (skills)
+═══════════════════════════════════ */
+function focusTagInput(id) { document.getElementById(id).focus(); }
+
+function handleTagKey(e, type) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const input = e.target;
+    const val = input.value.replace(',','').trim();
+    if (val) addTag(type, val);
+    input.value = '';
+  }
+  if (e.key === 'Backspace' && e.target.value === '') {
+    const arr = type === 'teach' ? state.teachSkills : state.learnSkills;
+    if (arr.length) removeTag(type, arr[arr.length - 1]);
+  }
+}
+
+function addTag(type, val) {
+  const arr = type === 'teach' ? state.teachSkills : state.learnSkills;
+  if (arr.includes(val)) return;
+  arr.push(val);
+  renderTags(type);
+}
+
+function removeTag(type, val) {
+  if (type === 'teach') state.teachSkills = state.teachSkills.filter(s => s !== val);
+  else state.learnSkills = state.learnSkills.filter(s => s !== val);
+  renderTags(type);
+}
+
+function renderTags(type) {
+  const wrap = document.getElementById(type + '-wrap');
+  const input = document.getElementById(type + '-input');
+  const arr = type === 'teach' ? state.teachSkills : state.learnSkills;
+  // remove old tags
+  wrap.querySelectorAll('.tag').forEach(t => t.remove());
+  arr.forEach(val => {
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = val + '<button onclick="removeTag(\'' + type + '\',\'' + val + '\')" type="button">×</button>';
+    wrap.insertBefore(tag, input);
+  });
+}
+
+/* ═══════════════════════════════════
+   INTEREST & AVAILABILITY CHIPS
+═══════════════════════════════════ */
+function buildInterestGrid() {
+  const grid = document.getElementById('interest-grid');
+  if (grid.children.length) return;
+  INTERESTS.forEach(i => {
+    const chip = document.createElement('div');
+    chip.className = 'interest-chip';
+    chip.textContent = i;
+    chip.onclick = () => toggleChip(chip, i, state.interests);
+    grid.appendChild(chip);
+  });
+}
+
+function buildAvailGrid() {
+  const grid = document.getElementById('avail-grid');
+  if (grid.children.length) return;
+  AVAILABILITY.forEach(a => {
+    const chip = document.createElement('div');
+    chip.className = 'avail-chip';
+    chip.textContent = a;
+    chip.onclick = () => toggleChip(chip, a, state.availability);
+    grid.appendChild(chip);
+  });
+}
+
+function toggleChip(el, val, arr) {
+  if (arr.includes(val)) {
+    arr.splice(arr.indexOf(val), 1);
+    el.classList.remove('selected');
+  } else {
+    arr.push(val);
+    el.classList.add('selected');
+  }
+}
+
+/* ═══════════════════════════════════
+   SUBMIT & MATCH
+═══════════════════════════════════ */
+function submitProfile() {
+  if (!validateStep(4)) {}
+  state.profile = {
+    firstName:   document.getElementById('first-name').value.trim(),
+    lastName:    document.getElementById('last-name').value.trim(),
+    email:       document.getElementById('email').value.trim(),
+    age:         document.getElementById('age').value,
+    grade:       document.getElementById('grade').value,
+    school:      document.getElementById('school').value.trim(),
+    level:       document.getElementById('level').value,
+    bio:         document.getElementById('bio').value.trim(),
+    learnStyle:  document.getElementById('learn-style').value,
+    sessionFmt:  document.getElementById('session-format').value,
+    sessionLen:  document.getElementById('session-length').value,
+    goals:       document.getElementById('goals').value.trim(),
+    teaches:     [...state.teachSkills],
+    learns:      [...state.learnSkills],
+    interests:   [...state.interests],
+    availability:[...state.availability],
+  };
+
+  closeSignup();
+  showMatches();
+}
+
+/* ═══════════════════════════════════
+   MATCHING ALGORITHM
+═══════════════════════════════════ */
+function scoreMatch(peer, profile) {
+  let score = 0;
+  // peer can teach something user wants to learn
+  const teachOverlap = peer.teaches.filter(s =>
+    profile.learns.some(l => l.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(l.toLowerCase()))
+  );
+  score += teachOverlap.length * 30;
+
+  // peer wants to learn something user can teach
+  const learnOverlap = peer.learns.filter(s =>
+    profile.teaches.some(t => t.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(t.toLowerCase()))
+  );
+  score += learnOverlap.length * 25;
+
+  // shared interests
+  const intOverlap = peer.interests.filter(i => profile.interests.includes(i));
+  score += intOverlap.length * 10;
+
+  // availability overlap
+  const availOverlap = peer.availability.filter(a => profile.availability.includes(a));
+  score += availOverlap.length * 5;
+
+  // age proximity (within 2 years)
+  const ageDiff = Math.abs(parseInt(peer.age) - parseInt(profile.age || 16));
+  if (ageDiff <= 1) score += 15;
+  else if (ageDiff <= 2) score += 8;
+  else if (ageDiff <= 3) score += 3;
+
+  return { score, teachOverlap, learnOverlap, intOverlap };
+}
+
+function showMatches() {
+  document.getElementById('landing-view').style.display = 'none';
+  const mv = document.getElementById('matches-view');
+  mv.classList.add('active');
+  window.scrollTo(0,0);
+
+  const p = state.profile;
+  document.getElementById('matches-greeting').textContent =
+    'Welcome, ' + (p.firstName || 'Student') + '! 👋';
+  document.getElementById('matches-subline').textContent =
+    'We found ' + computedMatches().length + ' peer matches based on your skills and interests.';
+
+  document.getElementById('header-credits').textContent = '⚡ 1 credit';
+
+  // build profile strip
+  buildProfileStrip(p);
+
+  // render matches
+  renderMatches('all');
+}
+
+function computedMatches() {
+  const p = state.profile;
+  return PEER_POOL.map(peer => ({ peer, ...scoreMatch(peer, p) }))
+    .sort((a,b) => b.score - a.score);
+}
+
+let currentFilter = 'all';
+function filterMatches(type, el) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderMatches(type);
+}
+
+function renderMatches(filter) {
+  const container = document.getElementById('matches-container');
+  container.innerHTML = '';
+  const p = state.profile;
+  let results = computedMatches();
+
+  if (filter === 'teach') results = results.filter(r => r.teachOverlap.length > 0);
+  else if (filter === 'learn') results = results.filter(r => r.learnOverlap.length > 0);
+  else if (filter === 'interests') results = results.filter(r => r.intOverlap.length > 0);
+
+  if (!results.length) {
+    container.innerHTML = '<div style="text-align:center;padding:48px;color:var(--muted);">No matches for this filter yet.<br>Try adding more skills or interests!</div>';
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'matches-grid';
+  results.forEach(({ peer, score, teachOverlap, learnOverlap, intOverlap }) => {
+    const pct = Math.min(99, Math.round((score / 100) * 10) * 10) || 65;
+    grid.innerHTML += matchCardHTML(peer, pct, teachOverlap, learnOverlap, intOverlap);
+  });
+  container.appendChild(grid);
+}
+
+function matchCardHTML(peer, pct, teachOverlap, learnOverlap, intOverlap) {
+  const teachPills = peer.teaches.map(s =>
+    `<span class="match-pill mp-teach">${s}</span>`).join('');
+  const learnPills = peer.learns.slice(0,3).map(s =>
+    `<span class="match-pill mp-learn">${s}</span>`).join('');
+  const intPills = peer.interests.slice(0,3).map(s =>
+    `<span class="match-pill mp-int">${s}</span>`).join('');
+
+  const badges = [];
+  if (teachOverlap.length) badges.push(`<span class="match-pill mp-teach">✓ Can teach you ${teachOverlap[0]}</span>`);
+  if (learnOverlap.length) badges.push(`<span class="match-pill mp-learn">✓ Wants to learn from you</span>`);
+
+  return `
+  <div class="match-card">
+    <div class="match-card-header">
+      <div class="match-avatar" style="background:${peer.color}">${peer.initials}</div>
+      <div class="match-card-info">
+        <div class="match-card-name">${peer.name}</div>
+        <div class="match-card-meta">${peer.age} · ${peer.grade} · ⭐ ${peer.rating} (${peer.sessions} sessions)</div>
+      </div>
+      <div class="match-score">
+        <span class="match-score-num">${pct}%</span>
+        match
+      </div>
+    </div>
+    ${badges.length ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">${badges.join('')}</div>` : ''}
+    <div class="match-card-section">
+      <div class="match-section-label">Can teach</div>
+      <div class="match-pills">${teachPills}</div>
+    </div>
+    <div class="match-card-section">
+      <div class="match-section-label">Wants to learn</div>
+      <div class="match-pills">${learnPills}</div>
+    </div>
+    ${intOverlap.length ? `<div class="match-card-section">
+      <div class="match-section-label">Shared interests</div>
+      <div class="match-pills">${intOverlap.map(i=>`<span class="match-pill mp-int">${i}</span>`).join('')}</div>
+    </div>` : ''}
+    ${peer.bio ? `<p style="font-size:.82rem;color:var(--muted);line-height:1.6;margin:10px 0;">"${peer.bio}"</p>` : ''}
+    <div class="match-card-footer">
+      <button class="btn-connect" onclick="connectPeer('${peer.name}')">Connect</button>
+      <button class="btn-save" onclick="savePeer(this, '${peer.name}')">♡ Save</button>
+    </div>
+  </div>`;
+}
+
+function buildProfileStrip(p) {
+  const container = document.getElementById('profile-strip-container');
+  const teachPills = p.teaches.map(s => `<span class="pill pill-b" style="font-size:.78rem;">${s}</span>`).join('');
+  const learnPills = p.learns.map(s => `<span class="pill pill-a" style="font-size:.78rem;">${s}</span>`).join('');
+  const initial = (p.firstName || 'U')[0].toUpperCase();
+  container.innerHTML = `
+  <div class="profile-strip">
+    <div class="profile-strip-avatar">${initial}</div>
+    <div class="profile-strip-info">
+      <div class="profile-strip-name">${p.firstName} ${p.lastName}</div>
+      <div class="profile-strip-sub">${p.grade || 'Student'} ${p.school ? '· ' + p.school : ''}</div>
+      <div class="profile-strip-skills">
+        ${teachPills}
+        <span style="width:1px;background:var(--border);display:inline-block;margin:0 4px;"></span>
+        ${learnPills}
+      </div>
+    </div>
+    <div style="margin-left:auto;text-align:right;">
+      <div style="font-size:.78rem;color:var(--muted);margin-bottom:4px;">YOUR CREDITS</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:800;color:var(--blue);">1</div>
+      <div style="font-size:.75rem;color:var(--muted);">free intro credit</div>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════
+   INTERACTIONS
+═══════════════════════════════════ */
+function connectPeer(name) {
+  showToast('Connection request sent to ' + name + '! 🎉');
+}
+function savePeer(btn, name) {
+  btn.textContent = '♥ Saved';
+  btn.style.background = 'var(--blue-lt)';
+  btn.style.color = 'var(--blue)';
+  btn.style.borderColor = 'var(--blue)';
+  showToast(name + ' saved to your list.');
+}
+
+function showLanding() {
+  document.getElementById('landing-view').style.display = '';
+  document.getElementById('matches-view').classList.remove('active');
+  window.scrollTo(0,0);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* nav CTA also opens signup */
+document.querySelectorAll('.nav-cta, .btn-primary').forEach(el => {
+  if (el.textContent.includes('started') || el.textContent.includes('profile') || el.textContent.includes('account')) {
+    el.addEventListener('click', e => { e.preventDefault(); openSignup(); });
+  }
+});
+</script>
+</body>
+</html>
